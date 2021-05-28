@@ -107,7 +107,6 @@ export function ObjectDetector() {
     const predictions = await model.detect(imageElement, 6);
     const normalizedPredictions = normalizePredictions(predictions, imgSize);
     setPredictions(normalizedPredictions);
-    console.log("Predictions: ", predictions);
   };
 
 
