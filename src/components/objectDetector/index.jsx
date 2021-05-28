@@ -11,7 +11,7 @@ const ObjectDetectorContainer = styled.div`
 `;
 
 const DetectorContainer = styled.div`
-  min-width: 200px;
+  min-width: 300px;
   height: 700px;
   border: 3px solid #fff;
   border-radius: 5px;
@@ -50,13 +50,10 @@ const SelectButton = styled.button`
 
 const TargetBox = styled.div`
   position: absolute;
-
   left: ${({ x }) => x + "px"};
   top: ${({ y }) => y + "px"};
   width: ${({ width }) => width + "px"};
   height: ${({ height }) => height + "px"};
-
-
   border: 4px solid #1ac71a;
   background-color: transparent;
   z-index: 20;
@@ -94,7 +91,6 @@ export function ObjectDetector() {
       const oldY = bbox[1];
       const oldWidth = bbox[2];
       const oldHeight = bbox[3];
-
       const imgWidth = imageRef.current.width;
       const imgHeight = imageRef.current.height;
 
@@ -102,7 +98,6 @@ export function ObjectDetector() {
       const y = (oldY * imgHeight) / imgSize.height;
       const width = (oldWidth * imgWidth) / imgSize.width;
       const height = (oldHeight * imgHeight) / imgSize.height;
-
       return { ...prediction, bbox: [x, y, width, height] };
     });
   };
@@ -115,6 +110,7 @@ export function ObjectDetector() {
     console.log("Predictions: ", predictions);
   };
 
+
   const readImage = (file) => {
     return new Promise((rs, rj) => {
       const fileReader = new FileReader();
@@ -123,6 +119,7 @@ export function ObjectDetector() {
       fileReader.readAsDataURL(file);
     });
   };
+
 
   const onSelectImage = async (e) => {
     setPredictions([]);
@@ -150,9 +147,9 @@ export function ObjectDetector() {
       <DetectorContainer>
         {imgData && <TargetImg src={imgData} ref={imageRef} />}
         {!isEmptyPredictions &&
-          predictions.map((prediction, idx) => (
+          predictions.map((prediction, index) => (
             <TargetBox
-              key={idx}
+              key={index}
               x={prediction.bbox[0]}
               y={prediction.bbox[1]}
               width={prediction.bbox[2]}
